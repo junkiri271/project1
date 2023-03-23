@@ -1,0 +1,127 @@
+<!-- Header start -->
+<%- include('../partials/header.ejs') %>
+    <!-- Header end -->
+
+    <!-- Topbar Start -->
+    <%- include('../partials/topbar.ejs') %>
+        <!-- Topbar End -->
+
+
+        <!-- Navbar Start -->
+        <%- include('../partials/navbar.ejs') %>
+            <!-- Navbar End -->
+
+
+            <!-- Page Header Start -->
+            <div class="container-fluid bg-dark p-5">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="display-4 text-white">Contact Us</h1>
+                        <a href="">Home</a>
+                        <i class="far fa-square text-primary px-2"></i>
+                        <a href="">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+
+            <!-- Contact Start -->
+            <div class="container-fluid bg-secondary px-0">
+                <div class="row g-0">
+                    <div class="col-lg-6 py-6 px-5">
+                        <h1 class="display-5 mb-4">Contact For Any Queries</h1>
+                        <div class="alert alert-primary" role="alert" id="form-validation-alert" style="display: none;">
+                        </div>
+                        <div class="alert alert-success" role="alert" id="form-submit-alert" style="display: none;">
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <input type="text" id="fullname" class="form-control" id="form-floating-1"
+                                        placeholder="John Doe">
+                                    <label for="form-floating-1">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <input type="email" id="email" class="form-control" id="form-floating-2"
+                                        placeholder="name@example.com">
+                                    <label for="form-floating-2">Email address</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" id="subject" class="form-control" id="form-floating-3"
+                                        placeholder="Subject">
+                                    <label for="form-floating-3">Subject</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="message" placeholder="Message"
+                                        id="form-floating-4" style="height: 150px"></textarea>
+                                    <label for="form-floating-4">Message</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" id="btn-submit-contact"
+                                    type="button">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6" style="min-height: 400px;">
+                        <div class="position-relative h-100">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14130.927037028814!2d85.3310635804658!3d27.69468432475274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb199a06c2eaf9%3A0xc5670a9173e161de!2sNew%20Baneshwor%2C%20Kathmandu%2044600%2C%20Nepal!5e0!3m2!1sen!2suk!4v1679446194601!5m2!1sen!2suk"
+                                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact End -->
+            <%- include('../partials/footer.ejs') %>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+                    integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+
+                <script>
+                   
+                    let formvalidationalert = $('#form-validation-alert')
+                    let formsubmitalert = $('#form-submit-alert') 
+                    
+                    $('#btn-submit-contact').click(() => {
+                        let fullname = $('#fullname').val()
+                        let email = $('#email').val()
+                        let subject = $('#subject').val()
+                        let message = $('#message').val()
+                        
+                        if (fullname.length === 0 || email.length === 0) {
+                            formvalidationalert.text('Please fill out the contact form *')
+                            formvalidationalert.fadeIn(1)
+                        }
+                        else {
+                            formvalidationalert.fadeOut(1)
+
+                            axios.post('/contact', {
+                                'fullname': fullname,
+                                'email': email,
+                                'subject': subject,
+                                'message': message,
+                            }).then(response => {
+                                const data = response.data
+                                if(data.success){
+                                    formvalidationalert.fadeOut(1)
+                                    formsubmitalert.text(data.msg)
+                                    formsubmitalert.fadeIn(1)
+                                }
+
+                            })
+                        }
+                    })
+                </script>
+              
+                <!-- Footer Start -->

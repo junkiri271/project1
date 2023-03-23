@@ -1,0 +1,125 @@
+<!-- Header start -->
+<%- include('../partials/header.ejs') %>
+    <!-- Header end -->
+
+    <!-- Topbar Start -->
+    <%- include('../partials/topbar.ejs') %>
+        <!-- Topbar End -->
+
+
+        <!-- Navbar Start -->
+        <%- include('../partials/navbar.ejs') %>
+            <!-- Navbar End -->
+
+
+            <!-- Page Header Start -->
+            <div class="container-fluid bg-dark p-5">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 class="display-4 text-white">Free Quote</h1>
+                        <a href="">Home</a>
+                        <i class="far fa-square text-primary px-2"></i>
+                        <a href="">Free Quote</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+
+            <!-- Quote Start -->
+            <div class="container-fluid bg-secondary px-0">
+                <div class="row g-0">
+                    <div class="col-lg-6 py-6 px-5">
+                        <h1 class="display-5 mb-4">Request A Free Quote</h1>
+                        <div class="alert alert-primary" role="alert" id="form-validation-alert" style="display: none;">
+                        </div>
+                        <div class="alert alert-success" role="alert" id="form-submit-alert" style="display: none;">
+                        </div>
+                        <p class="mb-4"></p>
+
+                        <div class="row gx-3">
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="form-floating-1" placeholder="John Doe"
+                                        id="quote-fullname">
+                                    <label for="form-floating-1">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input type="quote-email" class="form-control" id="form-floating-2"
+                                        placeholder="name@example.com" id="email">
+                                    <label for="form-floating-2">Email address</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <select class="form-select" id="floatingSelect" aria-label="Service">
+                                        <option selected="" value="education">Education</option>
+                                        <option value="government">Government</option>
+                                        <option value="ecommerce">Ecommerce</option>
+                                        <option value="restaurant">Restaurant</option>
+                                        <option value="digital marketing">Digital Marketing</option>
+                                        <option value="social networking">Social Networking</option>
+                                        <option value="transportation">Transportation</option>
+                                    </select>
+                                    <label for="floatingSelect">Select A Service</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-primary w-100 h-100" id="btn-submit-quote" type="button">Request
+                                    A
+                                    Quote</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6" style="min-height: 400px;">
+                        <div class="position-relative h-100">
+                            <img class="position-absolute w-100 h-100" src="img/quote.jpg" style="object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+                integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+
+            <script>
+
+                let formvalidationalert = $('#form-validation-alert')
+                let formsubmitalert = $('#form-submit-alert')
+
+                $('#btn-submit-quote').click(() => {
+                    let fullname = $('#quote-fullname').val()
+                    let email = $('#quote-email').val()
+                    let service = $('#floatingSelect').val()
+                    formvalidationalert.text('Please fill out the form *')
+                    formvalidationalert.fadeIn(1)
+
+
+                    formvalidationalert.fadeOut(1)
+
+                    axios.post('/quote', {
+                        'fullname': fullname,
+                        'email': email,
+                        'service': service,
+                    }).then(response => {
+                        const data = response.data
+                        if (data.success) {
+                            formvalidationalert.fadeOut(1)
+                            formsubmitalert.text(data.msg)
+                            formsubmitalert.fadeIn(1)
+                        }
+
+                    })
+
+                })
+            </script>
+            <!-- Quote End -->
+
+
+            <!-- Footer Start -->
+            <%- include('../partials/footer.ejs') %>
